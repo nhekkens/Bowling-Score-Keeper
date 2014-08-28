@@ -1,0 +1,68 @@
+.result-table {
+  width: 100%;
+  height: 150px;
+  border: 1px solid black; }
+  .result-table .frame-count {
+    width: 100%;
+    float: left;
+    height: 20px; }
+    .result-table .frame-count div {
+      width: -webkit-calc(10% - 1px);
+      width: calc(10% - 1px);
+      float: left;
+      border-bottom: 1px solid black;
+      border-right: 1px solid black;
+      text-align: center; }
+      .result-table .frame-count div:last-child {
+        border-right: none;
+        width: 10%; }
+  .result-table .score-count {
+    width: 100%;
+    float: left; }
+    .result-table .score-count .frame {
+      width: -webkit-calc(10% - 1px);
+      width: calc(10% - 1px);
+      float: left;
+      border-bottom: 1px solid black;
+      border-right: 1px solid black;
+      text-align: center;
+      height: 130px; }
+      .result-table .score-count .frame .roll1 {
+        width: 50%;
+        text-align: center;
+        float: left;
+        height: 50px;
+        line-height: 50px; }
+      .result-table .score-count .frame .roll2 {
+        width: -webkit-calc(50% - 1px);
+        width: calc(50% - 1px);
+        float: left;
+        text-align: center;
+        border-bottom: 1px solid black;
+        border-left: 1px solid black;
+        height: 50px;
+        line-height: 50px; }
+      .result-table .score-count .frame .score {
+        width: 100%;
+        text-align: center;
+        height: 75px;
+        line-height: 75px; }
+      .result-table .score-count .frame:last-child {
+        border-right: none;
+        width: 10%; }
+        .result-table .score-count .frame:last-child .roll1 {
+          width: 33%;
+          float: left;
+          text-align: center;
+          height: 50px;
+          line-height: 50px; }
+        .result-table .score-count .frame:last-child .roll2,
+        .result-table .score-count .frame:last-child .roll3 {
+          width: -webkit-calc(33% - 1px);
+          width: calc(33% - 1px);
+          float: left;
+          text-align: center;
+          border-bottom: 1px solid black;
+          border-left: 1px solid black;
+          height: 50px;
+          line-height: 50px; }
