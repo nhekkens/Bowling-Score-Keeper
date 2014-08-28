@@ -20,10 +20,10 @@ var playerScored = function( score ) {
 		targetClass = 'roll' + ballRoll;
 
 	// its more acurate here
-	console.log( ' ');	
-	console.log( '******************* THROW ' + throwNumber + '/' + throwLimit + ' ******************');	
-	console.log( 'Frame: ' + frame + ' Roll: ' + ballRoll);	
-	console.log( 'You Hit ' + score + '  pins!');	
+	console.log( ' ');
+	console.log( '******************* THROW ' + throwNumber + '/' + throwLimit + ' ******************');
+	console.log( 'Frame: ' + frame + ' Roll: ' + ballRoll);
+	console.log( 'You Hit ' + score + '  pins!');
 
 	if ( throwNumber <= throwLimit ) {
 
@@ -52,9 +52,9 @@ var playerScored = function( score ) {
 				// start new throws
 				ballRoll = 0;
 
-				// get 11 new pins 
+				// get 11 new pins
 				addPins(11);
-			} 
+			}
 			// not a strike
 			else {
 
@@ -67,7 +67,7 @@ var playerScored = function( score ) {
 				// add correct amount of pins
 				addPins(nextPins);
 			}
-		} 
+		}
 		// are we throw two?
 		if ( ballRoll === 2 ) {
 
@@ -76,12 +76,12 @@ var playerScored = function( score ) {
 
 				// add score to table
 				$('#' + targetID + ' div.roll2').html('/');
-				
+
 			}
 
 			// not a spare
 			else {
-				
+
 				// add score to table
 				$('#' + targetID + ' div.' + targetClass).html(score);
 			}
@@ -92,15 +92,15 @@ var playerScored = function( score ) {
 			// start new throws
 			ballRoll = 0;
 
-			// get 11 new pins 
+			// get 11 new pins
 			addPins(11);
 		}
 
 	}
-	// over throwlimit 
+	// over throwlimit
 	else
 	{
-		var resetButton = ['<button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Play again" onclick="resetGame();" value="0">Start Over</button>'];
+		var resetButton = ['<button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Play again" onclick="resetGame();" value="0">Start Over</button><button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Play again" onclick="saveGame();" value="0">Save</button>'];
 
 		$('#input').html(resetButton);
 	}
@@ -110,7 +110,7 @@ var playerScored = function( score ) {
 
 	lastFrame = frame;
 	lastScore = score;
-	
+
 	// console.log( 'Throw: ' + ballRoll );
 	// console.log( 'Frame: ' + frame + 'Roll: ' + ballRoll);
 	// console.log( 'Throws: ' + throwNumber + '/' + throwLimit );
@@ -126,43 +126,55 @@ var resetGame = function(){
 	throwNumber = 0;
 	totalScore = [];
 
-	// get 11 new pins 
+	// get 11 new pins
 	addPins(11);
 
 }
 
+var saveGame = function(){
+
+	var tosend = '{ "scores": ' + JSON.stringify(totalScore) + '}',
+			readySend = JSON.parse(tosend);
+	console.log(readySend);
+
+	$.ajax({
+	  type: "POST",
+	  url: '/newGame.php',
+	  data: readySend,
+	  success: function( data ) {
+			console.log( data );
+			alert('Saved');
+		},
+	  dataType: 'json'
+	});
+
+}
+
 var scoreArray = function(){
-        var score = 0,
-        	ball=0,
-        	scoreFrame=1,
-        	scoreFrames=[],
-        	cur;
+  var score = 0,
+  	ball=0,
+  	scoreFrame=1,
+  	scoreFrames=[],
+  	cur;
 
-        // i took this from google
-        for (var i=0, l=totalScore.length; i<l; i++ ) {
-        	score += (cur = totalScore[i])
-            	+ ((!ball && frame<10 && cur==10 && totalScore[i+2]) || 0)
-            	+ (scoreFrame<10 && (((ball ? totalScore[i-1] : 0) + cur) == 10) ? totalScore[i+1] || 0 : 0);
-        	ball = ball || (cur==10) ? 0 : 1;
-        	ball || (scoreFrame<10 ? scoreFrames.push(score) && scoreFrame++ : scoreFrames[9] = score);
-        }
-        console.log('The Scores so far are: ' , scoreFrames);
+  // i took this from google
+  for (var i=0, l=totalScore.length; i<l; i++ ) {
+  	score += (cur = totalScore[i])
+      	+ ((!ball && frame<10 && cur==10 && totalScore[i+2]) || 0)
+      	+ (scoreFrame<10 && (((ball ? totalScore[i-1] : 0) + cur) == 10) ? totalScore[i+1] || 0 : 0);
+  	ball = ball || (cur==10) ? 0 : 1;
+  	ball || (scoreFrame<10 ? scoreFrames.push(score) && scoreFrame++ : scoreFrames[9] = score);
+  }
+  console.log('The Scores so far are: ' , scoreFrames);
 
-        // add scores
-        $( ".score" ).each(function( index ) {
-		  $( this ).html( scoreFrames[index] ) ;
-		});
+  // add scores
+  $( ".score" ).each(function( index ) {
+	  $( this ).html( scoreFrames[index] ) ;
+	});
 
-     
-        return scoreFrames;
-    }
 
-// var addFormData = function(){
-        
-//         .$.each( totalScore, function(index, val) {
-//         	 /* iterate through array or object */
-//         });
-//     }
+  return scoreFrames;
+}
 
 var addPins = function( pins ) {
 	var index;

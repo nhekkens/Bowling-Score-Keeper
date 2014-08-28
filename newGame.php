@@ -2,7 +2,7 @@
 <html>
 
 <head>
-	<title>Score Keeper</title>
+  <title>Score Keeper</title>
 </head>
 <body>
 
@@ -11,8 +11,9 @@
 <?php
 require('database.php');
 
+$scores = implode(" ", $_POST['scores']);
 
-$query="INSERT INTO Users ( username ) VALUES ('$_POST[username]')";
+$query="INSERT INTO Games ( scores ) VALUES ('$scores')";
 
 if (!mysql_query( $query, $database ))
   {
