@@ -13,7 +13,18 @@ require('database.php');
 
 $scores = implode(" ", $_POST['scores']);
 
-$query="INSERT INTO Games ( scores ) VALUES ('$scores')";
+$uid = $_POST['UID'];
+
+echo $uid;
+
+echo $scores
+
+$query="INSERT INTO Games ( 
+	scores,
+	UID ) 
+VALUES (
+	'$scores',
+	'$UID')";
 
 if (!mysql_query( $query, $database ))
   {
@@ -21,6 +32,9 @@ if (!mysql_query( $query, $database ))
   }
 echo $_POST[username] . " added";
 
+
+error_log(print_r($_REQUEST, true));
+error_log('test');
 ?>
 
 

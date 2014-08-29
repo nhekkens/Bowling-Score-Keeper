@@ -8,7 +8,8 @@ var ballRoll = 0,
 	strikeBonus = 0,
 	spareBonus = 0,
 	lastScore = 0,
-	totalScore = [];
+	totalScore = [],
+	uid = 1;
 
 
 var playerScored = function( score ) {
@@ -136,11 +137,19 @@ var saveGame = function(){
 	var tosend = '{ "scores": ' + JSON.stringify(totalScore) + '}',
 			readySend = JSON.parse(tosend);
 	console.log(readySend);
+	
+
+
+	var jsonData = '{ "scores": ' + JSON.stringify(totalScore) + ', "UID": ' + uid + ' }',
+		readyToSend = JSON.parse(jsonData);
+	
+			
+	console.log(readyToSend);
 
 	$.ajax({
 	  type: "POST",
 	  url: '/newGame.php',
-	  data: readySend,
+	  data: readyToSend,
 	  success: function( data ) {
 			console.log( data );
 			alert('Saved');
