@@ -18,14 +18,14 @@ if (!$database)
 
 // Create Users table here
 
-// mysql_select_db( "scorekeeper", $database );
-// $query = "CREATE TABLE Users
-// (
-// UID int NOT NULL AUTO_INCREMENT,
-// PRIMARY KEY(UID),
-// username varchar(15) UNIQUE
-// )";
-// mysql_query( $query, $database );
+mysql_select_db( "scorekeeper", $database );
+$query = "CREATE TABLE Users
+(
+UID int NOT NULL AUTO_INCREMENT,
+PRIMARY KEY(UID),
+username varchar(15) UNIQUE
+)";
+mysql_query( $query, $database );
 
 // Create Games table here
 

@@ -1,6 +1,18 @@
+// Taken from the internet ( no need to reinvent the wheel )
 $.urlParam = function(name){
 		var results = new RegExp('[\?&amp;]' + name + '=([^&amp;#]*)').exec(window.location.href);
 		return results[1] || 0;
+}
+$.fn.removeText = function() {
+    for (var i=this.length-1; i>=0; --i) removeText(this[i]);
+};
+function removeText(node) {
+    if (!node) return;
+    for (var i=node.childNodes.length-1; i>=0; --i) {
+        var childNode = node.childNodes[i];
+        if (childNode.nodeType === 3) node.removeChild(childNode);
+        else if (childNode.nodeType === 1) removeText(childNode);
+    }
 }
 
 var ballRoll = 0,
@@ -142,7 +154,7 @@ var resetGame = function(){
 	// get 11 new pins
 	addPins(11);
 
-	$('#results').html( frameTable );
+	$('#scoreboard').removeText();
 
 }
 

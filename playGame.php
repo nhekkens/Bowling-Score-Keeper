@@ -21,6 +21,8 @@
           </div>
           <div class="panel-body">
 
+            <p>Select </p>
+
             <div id="input">
               <button id="btn0" type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="No pins knocked down" onclick="playerScored(0);" value="0">0</button>
               <button id="btn1" type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="1 pin knocked down" onclick="playerScored(1);" value="1">1</button>
@@ -48,7 +50,7 @@
                 <div>9</div>
                 <div>10</div>
               </div>
-              <div class="score-count">
+              <div id="scoreboard" class="score-count">
                 <div id="frame1" class="frame">
                   <div class="roll1"></div><div class="roll2"></div><div class="score"></div>
                 </div>
