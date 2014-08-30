@@ -15,16 +15,18 @@ $scores = implode(" ", $_POST['scores']);
 
 $uid = $_POST['UID'];
 
+error_log($scores);
+error_log($uid);
 echo $uid;
 
-echo $scores
+echo $scores;
 
-$query="INSERT INTO Games ( 
+$query="INSERT INTO Games (
 	scores,
-	UID ) 
+	UID )
 VALUES (
 	'$scores',
-	'$UID')";
+	'$uid')";
 
 if (!mysql_query( $query, $database ))
   {

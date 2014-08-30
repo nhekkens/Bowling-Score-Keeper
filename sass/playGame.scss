@@ -1,0 +1,34 @@
+#gamescores {
+  display: none;
+}
+
+#playGame {
+
+  height: 100%;
+
+  .row {
+
+    #positional {
+      float: none;
+    }
+
+    .mTop {
+      margin-top: 50px;
+    }
+
+    text-align: center;
+    .btn-group {
+
+      width: 100%;
+      .dropdown-toggle,
+      .dropdown-menu {
+
+        width: 100%;
+
+        a {
+          text-align: center;
+        }
+      }
+    }
+  }
+}
