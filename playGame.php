@@ -96,6 +96,8 @@
 
           </div>
         </div>
+
+        <a href="index.php" class="goback btn btn-primary btn-lg active" role="button">Change User</a>
       </div>
     </div>
   </div>

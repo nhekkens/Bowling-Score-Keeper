@@ -13,7 +13,8 @@ var ballRoll = 0,
 	spareBonus = 0,
 	lastScore = 0,
 	totalScore = [],
-	uid = $.urlParam('uid');
+	uid = $.urlParam('uid'),
+	frameTable = '<div class="frame-count"><div>1</div><div>2</div><div>3</div><div>4</div><div>5</div><div>6</div><div>7</div><div>8</div><div>9</div><div>10</div></div><div class="score-count"><div id="frame1" class="frame"><div class="roll1"></div><div class="roll2"></div><div class="score"></div></div><div id="frame2" class="frame"><div class="roll1"></div><div class="roll2"></div><div class="score"></div></div><div id="frame3" class="frame"><div class="roll1"></div><div class="roll2"></div><div class="score"></div></div><div id="frame4" class="frame"><div class="roll1"></div><div class="roll2"></div><div class="score"></div></div><div id="frame5" class="frame"><div class="roll1"></div><div class="roll2"></div><div class="score"></div></div><div id="frame6" class="frame"><div class="roll1"></div><div class="roll2"></div><div class="score"></div></div><div id="frame7" class="frame"><div class="roll1"></div><div class="roll2"></div><div class="score"></div></div><div id="frame8" class="frame"><div class="roll1"></div><div class="roll2"></div><div class="score"></div></div><div id="frame9" class="frame"><div class="roll1"></div><div class="roll2"></div><div class="score"></div></div><div id="frame10" class="frame"><div class="roll1"></div><div class="roll2"></div><div class="roll3"></div><div class="score"></div></div></div>';
 
 	console.log(uid);
 
@@ -140,6 +141,8 @@ var resetGame = function(){
 
 	// get 11 new pins
 	addPins(11);
+
+	$('#results').html( frameTable );
 
 }
 

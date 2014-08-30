@@ -6536,6 +6536,9 @@ button.close {
 #gamescores {
   display: none; }
 
+a.goback {
+  margin-bottom: 20px; }
+
 #playGame {
   height: 100%; }
   #playGame .row {
