@@ -1,3 +1,19 @@
+// Taken from the internet ( no need to reinvent the wheel )
+$.urlParam = function(name){
+		var results = new RegExp('[\?&amp;]' + name + '=([^&amp;#]*)').exec(window.location.href);
+		return results[1] || 0;
+}
+$.fn.removeText = function() {
+    for (var i=this.length-1; i>=0; --i) removeText(this[i]);
+};
+function removeText(node) {
+    if (!node) return;
+    for (var i=node.childNodes.length-1; i>=0; --i) {
+        var childNode = node.childNodes[i];
+        if (childNode.nodeType === 3) node.removeChild(childNode);
+        else if (childNode.nodeType === 1) removeText(childNode);
+    }
+}
 
 var ballRoll = 0,
 	throwNumber = 0,
@@ -9,7 +25,10 @@ var ballRoll = 0,
 	spareBonus = 0,
 	lastScore = 0,
 	totalScore = [],
-	uid = 1;
+	uid = $.urlParam('uid'),
+	frameTable = '<div class="frame-count"><div>1</div><div>2</div><div>3</div><div>4</div><div>5</div><div>6</div><div>7</div><div>8</div><div>9</div><div>10</div></div><div class="score-count"><div id="frame1" class="frame"><div class="roll1"></div><div class="roll2"></div><div class="score"></div></div><div id="frame2" class="frame"><div class="roll1"></div><div class="roll2"></div><div class="score"></div></div><div id="frame3" class="frame"><div class="roll1"></div><div class="roll2"></div><div class="score"></div></div><div id="frame4" class="frame"><div class="roll1"></div><div class="roll2"></div><div class="score"></div></div><div id="frame5" class="frame"><div class="roll1"></div><div class="roll2"></div><div class="score"></div></div><div id="frame6" class="frame"><div class="roll1"></div><div class="roll2"></div><div class="score"></div></div><div id="frame7" class="frame"><div class="roll1"></div><div class="roll2"></div><div class="score"></div></div><div id="frame8" class="frame"><div class="roll1"></div><div class="roll2"></div><div class="score"></div></div><div id="frame9" class="frame"><div class="roll1"></div><div class="roll2"></div><div class="score"></div></div><div id="frame10" class="frame"><div class="roll1"></div><div class="roll2"></div><div class="roll3"></div><div class="score"></div></div></div>';
+
+	console.log(uid);
 
 
 var playerScored = function( score ) {
@@ -20,18 +39,24 @@ var playerScored = function( score ) {
 	var targetID = 'frame' + frame,
 		targetClass = 'roll' + ballRoll;
 
-	// its more acurate here
-	console.log( ' ');
-	console.log( '******************* THROW ' + throwNumber + '/' + throwLimit + ' ******************');
-	console.log( 'Frame: ' + frame + ' Roll: ' + ballRoll);
-	console.log( 'You Hit ' + score + '  pins!');
 
 	if ( throwNumber <= throwLimit ) {
+
+		// its more acurate here
+		console.log( ' ');
+		console.log( '******************* THROW ' + throwNumber + '/' + throwLimit + ' ******************');
+		console.log( 'Frame: ' + frame + ' Roll: ' + ballRoll);
+		console.log( 'You Hit ' + score + '  pins!');
 
 		totalScore.push( score );
 
 		// are we on throw one?
 		if ( ballRoll === 1 ) {
+
+			if ( frame ===  11 ) {
+				// add score to table
+				$('#frame10 div.roll3').html(score);
+			}
 
 			// did we throw a strike?
 			if ( score === 10 ) {
@@ -42,10 +67,9 @@ var playerScored = function( score ) {
 				// add score to table
 				$('#' + targetID + ' div.roll2').html(0);
 
-				// totalScore.push( 0 );
-
-				// Add strike bonus
-				// strikeBonus = 1;f
+				if ( frame ===  10 ) {
+					throwLimit = 21;
+				}
 
 				// go to next frame
 				frame++;
@@ -78,6 +102,10 @@ var playerScored = function( score ) {
 				// add score to table
 				$('#' + targetID + ' div.roll2').html('/');
 
+				if ( frame ===  10 ) {
+					throwLimit = 21;
+				}
+
 			}
 
 			// not a spare
@@ -101,7 +129,7 @@ var playerScored = function( score ) {
 	// over throwlimit
 	else
 	{
-		var resetButton = ['<button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Play again" onclick="resetGame();" value="0">Start Over</button><button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Play again" onclick="saveGame();" value="0">Save</button>'];
+		var resetButton = ['<button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Play again" onclick="resetGame();" value="0">Start Over</button><button id="saveButton" type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Save Game" onclick="saveGame();" value="0">Save</button>'];
 
 		$('#input').html(resetButton);
 	}
@@ -112,10 +140,6 @@ var playerScored = function( score ) {
 	lastFrame = frame;
 	lastScore = score;
 
-	// console.log( 'Throw: ' + ballRoll );
-	// console.log( 'Frame: ' + frame + 'Roll: ' + ballRoll);
-	// console.log( 'Throws: ' + throwNumber + '/' + throwLimit );
-	// console.log( 'Spare Bonus: ' + spareBonus );
 	console.log( 'Total Score: ' + totalScore );
 
 
@@ -130,6 +154,8 @@ var resetGame = function(){
 	// get 11 new pins
 	addPins(11);
 
+	$('#scoreboard').removeText();
+
 }
 
 var saveGame = function(){
@@ -137,13 +163,13 @@ var saveGame = function(){
 	var tosend = '{ "scores": ' + JSON.stringify(totalScore) + '}',
 			readySend = JSON.parse(tosend);
 	console.log(readySend);
-	
 
+	$('#saveButton').hide();
 
 	var jsonData = '{ "scores": ' + JSON.stringify(totalScore) + ', "UID": ' + uid + ' }',
 		readyToSend = JSON.parse(jsonData);
-	
-			
+
+
 	console.log(readyToSend);
 
 	$.ajax({
@@ -204,4 +230,5 @@ var addPins = function( pins ) {
 	}
 	$('#input').html(text);
 	// console.log('pins added.');
+
 }

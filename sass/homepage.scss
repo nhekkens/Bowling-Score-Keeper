@@ -1,0 +1,29 @@
+#home {
+
+  height: 100%;
+
+  .row {
+
+    #positional {
+      float: none;
+      position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    }
+
+    text-align: center;
+    .btn-group {
+
+      width: 100%;
+      .dropdown-toggle,
+      .dropdown-menu {
+
+        width: 100%;
+
+        a {
+          text-align: center;
+        }
+      }
+    }
+  }
+}
