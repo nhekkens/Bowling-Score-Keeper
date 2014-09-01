@@ -19,7 +19,7 @@
 
 			<div class="panel panel-primary">
 	  		<div class="panel-heading">
-					<h1>Welcome.</h1>
+					<h1>Welcome to the Hekkens test.</h1>
 				</div>
 			  <div class="panel-body">
 
